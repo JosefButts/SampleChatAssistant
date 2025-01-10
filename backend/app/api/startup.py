@@ -1,5 +1,7 @@
-from app.core.assistant import AIAssistant
 import os
+
+from app.core.assistant import AIAssistant
+
 
 async def init_ai_assistant(app):
     """Initialize AI Assistant instance during startup"""

@@ -1,17 +1,23 @@
-version: '3.8'
-
 services:
   backend:
     build: 
       context: ./backend
       dockerfile: Dockerfile
     ports:
-      - "8000:8000"
-    env_file:
-      - .env
+      - "${BACKEND_PORT:-8000}:8000"
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - ENVIRONMENT=development
     volumes:
       - ./backend:/app
-    command: uvicorn app.api.startup:app --host 0.0.0.0 --port 8000 --reload
+      - /app/__pycache__
+      - /app/*/__pycache__
+      - /app/*/*/__pycache__
+    networks:
+      - ai-assistant-network
+    env_file:
+      - .env
+    command: uvicorn app.api.routes:app --host 0.0.0.0 --port 8000 
 
   frontend:
     build:
@@ -19,6 +25,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8501:8501"
+    networks:
+      - ai-assistant-network  
     environment:
       - API_URL=http://backend:8000
     volumes:
@@ -29,3 +37,4 @@ services:
 networks:
   ai-assistant-network:
     driver: bridge 
+

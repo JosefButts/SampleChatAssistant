@@ -1,25 +1,27 @@
-from langchain_openai import ChatOpenAI
-from langchain_openai import OpenAIEmbeddings
-from langchain_community.vectorstores import Chroma
-from langchain.chains import RetrievalQA
-from typing import Dict, List, Tuple, TypedDict, Annotated, Sequence
-from langchain_core.documents import Document
-from langchain_core.messages import BaseMessage, FunctionMessage, HumanMessage
-from langchain_core.tools import BaseTool
-from langchain_community.utilities import SerpAPIWrapper
-import os
-from llama_index import VectorStoreIndex, SimpleDirectoryReader
-from langgraph.prebuilt import create_react_agent
-from langchain_core.tools import tool
-from langchain_core.prompts import PromptTemplate
-import traceback
+# Python standard library imports
 import logging
+import os
+import traceback
+from typing import Dict
+
+# Third-party imports
+from langgraph.prebuilt import create_react_agent
+from llama_index import SimpleDirectoryReader
+
+# Langchain imports
+from langchain.chains import RetrievalQA
+from langchain_community.utilities import SerpAPIWrapper
+from langchain_community.vectorstores import Chroma
+from langchain_core.documents import Document
+from langchain_core.messages import HumanMessage
+from langchain_core.prompts import PromptTemplate
+from langchain_core.tools import BaseTool, tool
+from langchain_openai import ChatOpenAI, OpenAIEmbeddings
 
 logger = logging.getLogger(__name__)
 
 
 
-from langchain_core.tools import BaseTool
 
 class SearchWebTool(BaseTool):
     name: str = "search_web"
@@ -114,12 +116,6 @@ class AIAssistant:
             tools = [search_web, search_docs]
             self.tools = tools
 
-            # To explicitly define tool schemas
-            # tools = [
-            #     SearchWebTool(search=self.search),  # Create proper tool classes
-            #     SearchDocsTool(retriever=self.vector_store.as_retriever())
-            # ]
-            
             prompt = PromptTemplate.from_template(
                 """
                 You are a helpful assistant that can answer questions
@@ -129,7 +125,7 @@ class AIAssistant:
                 Use websearch if the documentation does not have the answer to the user's question,
                 or the answer requires a current event or general knowledge.
                 If the answers come from the web search, cite the link if possible.
-                Cite the source of your answer in the format: [source: <source_name>].
+                Cite the source (document name, web search etc ) of your answer as a markdown list.
                 
                 """
             )

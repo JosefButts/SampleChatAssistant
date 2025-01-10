@@ -62,10 +62,7 @@ if prompt := st.chat_input("Ask a question..."):
             response = get_assistant_response(prompt)
             if response:
                 st.markdown(response["answer"])
-                if response.get("source"):
-                    st.caption(f"Source: {response['source']}")
-                if response.get("confidence"):
-                    st.caption(f"Confidence: {response['confidence']}")
+                
                 # Add assistant response to chat history
                 st.session_state.messages.append({
                     "role": "assistant",

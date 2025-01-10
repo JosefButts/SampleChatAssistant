@@ -15,10 +15,6 @@ down:
 down-dev:
 	docker compose -f docker-compose.dev.yml down
 
-# Run tests
-test:
-	docker compose -f docker-compose.dev.yml exec backend pytest
-
 # Build images
 build:
 	docker compose build
