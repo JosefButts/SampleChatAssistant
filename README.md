@@ -5,7 +5,7 @@
 
 ## Overview
 
-This project is designed to run using Docker Compose, with a Makefile to simplify common tasks. Below are instructions on how to set up, run, and manage the application.
+This project is a simple chat assistant and web search tool designed to run using Docker Compose, with a Makefile to simplify common tasks. Below are instructions on how to set up, run, and manage the application.
 
 ## Prerequisites
 
@@ -53,6 +53,7 @@ These settings enable:
 Visit the [LangSmith dashboard](https://smith.langchain.com) to view traces and debug your application.
 
 ## Running the Application
+
 
 ### Using Docker Compose
 
@@ -163,4 +164,5 @@ Visit the [LangSmith dashboard](https://smith.langchain.com) to view traces and 
 ## Additional Information
 
 - Ensure that your Docker daemon is running before executing any Docker or Makefile commands.
+- If `make` is not available on your system, you can directly use the equivalent `docker-compose` commands listed in the "Using Docker Compose" section above.
 - For any issues or contributions, please refer to the project's issue tracker or contact the maintainers. 
